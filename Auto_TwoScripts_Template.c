@@ -31,7 +31,7 @@ task main()
 	waitForStart();		//Must be here to start corectly in the comp. If needed comment it out so it doesn't wait
 
 	//Game code here
-	if(SensorValue[modeButton]==1)
+	if(onRamp==true)
 		{
 			//Code here for if robobot starts on the ramp
 
