@@ -12,6 +12,7 @@
 
 const float ticksCm = 1440.0/27.0;
 const float ticksDg = 1440.0/90.0;
+const float powerDif = 0.85
 
 //Drive forward number of cm's
 void driveDistance(float cm, float LPower, float RPower) //Distance, Left wheel power, Right wheel power
@@ -21,7 +22,7 @@ void driveDistance(float cm, float LPower, float RPower) //Distance, Left wheel 
 	while(abs (nMotorEncoder[mtrLeft]) < ticks)
 		{
 			motor[mtrLeft]=LPower;
-			motor[mtrRight]=RPower;
+			motor[mtrRight]=RPower*powerDif;
 		}
 	motor[mtrLeft]=0;
 	motor[mtrRight]=0;
@@ -35,7 +36,7 @@ void turn(float deg, float power) //Degrees, Power (positive is right turn)
 	while(abs (nMotorEncoder[mtrLeft]) < ticks)
 		{
 			motor[mtrLeft]=power;
-			motor[mtrRight]=-power;
+			motor[mtrRight]=-power*powerDif;
 		}
 	motor[mtrLeft]=0;
 	motor[mtrRight]=0;
