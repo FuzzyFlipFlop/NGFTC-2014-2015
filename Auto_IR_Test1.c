@@ -51,29 +51,23 @@ void turn(float deg, float power) //Degrees, Power (positive is right turn)
 task main()
 {
 
-	driveDistance(125,20);
-	while(true){}
-	wait10Msec(10000);
-	if(SensorValue[IR]>5.1 && SensorValue[IR]<4.9)
+	driveDistance(115,20);
+
+	if(SensorValue[IR]!=5)
 		{
 			turn(90,20);
-			driveDistance(30,20);
-			turn(90,-20);
-			driveDistance(90,50);
 
-		}else if(SensorValue[IR]<4.5 && SensorValue[IR]>2)
+		}else
 			{
-				turn(45,20);
-				driveDistance(90,50);
+				driveDistance(4,15);
+				if(SensorValue[IR]!=5)
+					{
+						turn(180,20);
 
-			}else
-				{
-					turn(90,-20);
-					driveDistance(60,20);
-					turn(90,20);
-					driveDistance(30,20);
-					turn(90,20);
-					driveDistance(90,50);
+					}else
+						{
+							turn(27,20);
 
-				}
+						}
+			}
 }
