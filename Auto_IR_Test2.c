@@ -13,8 +13,8 @@
 #include "hitechnic-irseeker-v2.h"
 
 const float ticksCm = 1440.0/27.0;
-const float ticksDg = 1450.0/90.0;
-const float powerDif = 0.80;
+const float ticksDg = 1430.0/90.0;
+const float powerDif = 0.85;
 
 //Drive forward number of cm's
 void drive(float cm, float power) //Distance, Power
@@ -50,38 +50,46 @@ void turn(float deg, float power) //Degrees, Power (positive is right turn)
 
 task main()
 {
-	int _dirAC = 0;
+	int _dirAC = 0;//Resets IR
 
-	drive(65,20);
-	turn(52,-10);
-	wait10Msec(100);
-	_dirAC = HTIRS2readACDir(HTIRS2);
+	drive(130,20);//Drives Forward
+	turn(100,-20);//Turns left
+	drive(40,-20);//Drives Backwards
 
-	if(_dirAC==6)
+	wait10Msec(50);
+	_dirAC = HTIRS2readACDir(HTIRS2);//wairs for 0.5 a second then reads IR
+
+	if(_dirAC>7)//If beacon is facing robot
 		{
+			drive(30,-20);//Drives Backwards
+			turn(90,20);//Turns right
+			drive(50,20);//Drives Forward
+			turn(35,20);//Knocks pole down by turning
+		}
+	if(_dirAC==7)//If beacon is facing the corner
+		{
+			drive(50,-20);//Drives Backwards
+			turn(55,20);//Turns right
+			drive(40,20);//Drives Forward
+			turn(45,25);//Knocks pole down by turning
+		}
+	if(_dirAC==0)//If pole is facing robot
+		{
+			turn(5,20);//Turns right
+			drive(90,20);//Drives Forward
+			turn(90,20);//Turns right
+			drive(20,20);//Drives Forward
+			turn(90,20);//Turns right
+			drive(55,20);//Drives Forward
+			turn(45,25);//Knocks pole down by turning
+		}
 
-			nxtDisplayTextLine(2, "Ahead");
+		_dirAC = HTIRS2readACDir(HTIRS2);
+		string t;
+		StringFormat( t, "Sensor Value: %i", _dirAC);
+		//string t = "Sensor Value:" + _dirAC;
+		nxtDisplayTextLine(1, t);
 
-		}else
-			{
-				drive(60,20);
-				turn(30,-20);
-				if(_dirAC==0)
-					{
+		wait10Msec(100);
 
-						nxtDisplayTextLine(2, "Slanted");
-
-					}else
-						{
-							nxtDisplayTextLine(2, "Pole Ahead");
-
-						}
-			}
-			while(true)
-				{
-					_dirAC = HTIRS2readACDir(HTIRS2);
-					string t = _dirAC;
-					nxtDisplayTextLine(1, t);
-
-				}
 }
