@@ -13,6 +13,7 @@
 //#include "JoystickDriver.c" //Must be here to start corectly in the comp
 #include "hitechnic-irseeker-v2.h"
 
+//----------------------------------------------Encoder code
 const float ticksCm = 1440.0/27.0;
 const float ticksDg = 1430.0/90.0;
 const float powerDif = 0.85;
@@ -47,7 +48,7 @@ void turn(float deg, float power) //Degrees, Power (positive is right turn)
 	wait10Msec(10);
 }
 
-//----------------------------------------------
+//----------------------------------------------End encoder code
 
 bool onRamp = false;
 string t = "Press btn on ramp";
