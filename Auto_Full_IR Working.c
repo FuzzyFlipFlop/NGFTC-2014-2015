@@ -86,7 +86,7 @@ task main()
 
 
 	//Wait for start of game
-	//waitForStart();		//Must be here to start corectly in the comp. If needed comment it out so it doesn't wait
+	waitForStart();		//Must be here to start corectly in the comp. If needed comment it out so it doesn't wait
 
 	//Game code here
 	if(onRamp==true)//Robot is on the ramp
