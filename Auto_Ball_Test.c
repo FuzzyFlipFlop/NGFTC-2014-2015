@@ -62,13 +62,15 @@ task main()
 {
 	//motor[lift]=-10;
 	//wait10Msec(100);
-	drive(250,20);
+	//drive(250,20);
 	//Dispence Ball
-	liftStart(3350,25);
-	wait10Msec(100);
-	motor[lift]=-10;
-	wait10Msec(75);
-	motor[lift]=0;
+	//motor[lift]=-10;
+	//wait10Msec(5000);
+	liftStart(3000,25);
+	//wait10Msec(100);
+	//motor[lift]=-10;
+	//wait10Msec(75);
+	//motor[lift]=0;
 	//turn(90,-20);
 
 }
