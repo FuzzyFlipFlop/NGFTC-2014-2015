@@ -116,6 +116,8 @@ task main()
 
 	wait1Msec(1000);//Waits a second
 
+
+
 	//Wait for start of game
 	waitForStart();		//Must be here to start corectly in the comp. If needed comment it out so it doesn't wait
 
@@ -136,18 +138,18 @@ task main()
 				int _dirAC = 0;//Resets IR
 
 				//Navigating to IR becan
-				drive(50,20);//Drives forward 50cm
-				turn(90,20);//turns right 90 degrees
+				drive(50,30);//Drives forward 50cm
+				turn(90,30);//turns right 90 degrees
 
-				drive(100,20);//Drives forward 100cm
-				turn(90,-20);//Turns left 90 degrees
-				drive(80,20);//Drives forward 80cm
+				drive(100,30);//Drives forward 100cm
+				turn(90,-30);//Turns left 90 degrees
+				drive(80,30);//Drives forward 80cm
 
-				turn(90,20);//Turns right 90 degrees
-				turn(90,20);//Turns right 90 degrees
-				turn(100,20);//Turns right 100 degrees (100 to fix not being 100% accurate)
+				turn(90,30);//Turns right 90 degrees
+				turn(90,30);//Turns right 90 degrees
+				turn(100,30);//Turns right 100 degrees (100 to fix not being 100% accurate)
 
-				drive(62,20);//Drives forwards 62cm up to the becan
+				drive(62,30);//Drives forwards 62cm up to the becan
 				//At IR becan
 
 				wait1Msec(1000);//waits to let IR get a good read
@@ -155,24 +157,24 @@ task main()
 
 				if(_dirAC<9 && _dirAC>6)//If beacon is facing robot
 					{
-						drive(60,-20);//Drives backwards 60cm
-						turn(80,20);//Turns right 80 degrees
-						drive(20,20);//Drives forward 20cm
+						drive(60,-30);//Drives backwards 60cm
+						turn(80,30);//Turns right 80 degrees
+						drive(20,30);//Drives forward 20cm
 						turn(35,35);//Knocks pole down by turning
 					}
 				if(_dirAC<7 && _dirAC>4)//If beacon is facing the corner
 					{
-						drive(50,-20);//Drives backwards 50cm
-						turn(80,20);//Turns right 80 degrees
-						drive(5,20);//Drives forward 5cm
+						drive(50,-30);//Drives backwards 50cm
+						turn(80,30);//Turns right 80 degrees
+						drive(5,30);//Drives forward 5cm
 						turn(45,35);//Knocks pole down by turning
 						drive(35,-75);//Backs up to avoid being hit
 					}
 				if(_dirAC==9 || _dirAC==0)//If pole is facing robot
 					{
-						drive(60,-20);//Drives backwards 60 cm
-						turn(25,20);//Turns right 25 degrees
-						drive(35,20);//Drives Forward 35cm
+						drive(60,-30);//Drives backwards 60 cm
+						turn(25,30);//Turns right 25 degrees
+						drive(35,30);//Drives Forward 35cm
 						turn(50,-50);//Knocks pole down by turning
 					}
 			}

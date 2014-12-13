@@ -6,11 +6,11 @@
 #pragma config(Motor,  motorA,          r,             tmotorNXT, PIDControl, encoder)
 #pragma config(Motor,  motorB,          l,             tmotorNXT, PIDControl, encoder)
 #pragma config(Motor,  motorC,          arm,           tmotorNXT, PIDControl, encoder)
-#pragma config(Motor,  mtr_S1_C1_1,     left,          tmotorTetrix, openLoop, reversed, encoder)
-#pragma config(Motor,  mtr_S1_C1_2,     right,         tmotorTetrix, openLoop)
+#pragma config(Motor,  mtr_S1_C1_1,     left,          tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S1_C1_2,     right,         tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_1,     lift,          tmotorTetrix, openLoop, reversed)
 #pragma config(Motor,  mtr_S1_C2_2,     motorG,        tmotorTetrix, openLoop)
-#pragma config(Servo,  srvo_S1_C3_1,    sweeper,              tServoContinuousRotation)
+#pragma config(Servo,  srvo_S1_C3_1,    servo1,               tServoContinuousRotation)
 #pragma config(Servo,  srvo_S1_C3_2,    servo2,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_3,    servo3,               tServoNone)
 #pragma config(Servo,  srvo_S1_C3_4,    servo4,               tServoNone)
@@ -22,6 +22,7 @@
 
 bool liftUp=false;
 bool liftDown=false;
+bool sweeperOn=false;
 float factor=1;
 
 task main()
@@ -37,15 +38,20 @@ task main()
 					wait1Msec(10);
 					motor[lift]=0;
 				}
-				if(SensorValue[liftBack]==1)
+			if(SensorValue[liftBack]==1)
 				{
 					liftDown=true;
 					motor[lift]=0;
 				}
+			if(joy2Btn(3) == 0 && joy2Btn(2) == 0 && sweeperOn == true)
+				{
+					servo[servo1]=127;
+					sweeperOn=false;
+				}
 
 			getJoystickSettings(joystick);
 
-			if(joystick.joy2_y1<5 && joystick.joy2_y1>-5)
+			if(joystick.joy1_y1<5 && joystick.joy1_y1>-5)
 				{
 					motor[right]=0;
 				}else
@@ -83,7 +89,7 @@ task main()
 
 			if(joy1Btn(3) == 1)		//If B buttom is pressed
 				{
-
+					 factor=0.15;
 				}else
 					{
 
@@ -135,73 +141,88 @@ task main()
 			//Joy Stick 2
 			getJoystickSettings(joystick);
 
-			if(joystick.joy1_y1<5 && joystick.joy1_y1>-5)
+			if(joystick.joy2_y1<5 && joystick.joy2_y1>-5)
 				{
 					motor[lift]=0;
 				}else
 					{
-						float RWheel = ((float)joystick.joy1_y1/128*100)+10;
+						float MLift = (float)joystick.joy2_y1/128*100;
 						if(liftUp==true)
 							{
-								if(joystick.joy1_y1 < -10)
+								if(joystick.joy2_y1 < -10)
 									{
 										liftUp=false;
 									}
 								if(liftUp==false)
 									{
-										motor[lift]=(short)RWheel;
+										motor[lift]=(short) MLift;
 									}
 							}else if(liftDown==true)
 								{
-									if(joystick.joy1_y1 > 10)
+									if(joystick.joy2_y1 > 10)
 										{
 											liftDown=false;
 										}
 									if(liftDown==false)
 										{
-											motor[lift]=(short)RWheel;
+											motor[lift]=(short)MLift;
 										}
 								}else
 									{
-										motor[lift]=(short)RWheel;
+										motor[lift]=(short)MLift;
 									}
-
-
-
 					}
 
-			if(joystick.joy2_y2<5 && joystick.joy2_y2>-5)
-				{
+			//if(joystick.joy2_y2<5 && joystick.joy2_y2>-5)
+			//	{
+			//		//float Sweeper = (float)joystick.joy2_y1;
+			//		if(joystick.joy2_y2 < -10)
+			//			{
+			//				servo[servo1]=255;
+			//			}else if(joystick.joy2_y2 > 10)
+			//				{
+			//					servo[servo1]=0;
+			//				}else
+			//					{
+			//						servo[servo1]=127;
+			//					}
 
-				}else
-					{
-
-					}
+			//	}
 
 			//Buttons X A B Y
 
-			if(joy2Btn(1) == 1)		//If X button is pressed
-				{
+			//if(joy2Btn(1) == 1)		//If X button is pressed
+			//	{
 
-				}else
-					{
+			//	}else
+			//		{
 
-					}
+			//		}
 
 			if(joy2Btn(2) == 1)		//If A button is pressed
 				{
-
+					servo[servo1]=255;
+					sweeperOn=true;
 				}else
 					{
-
+						if(joy2Btn(3) == 0 && joy2Btn(2) == 0 && sweeperOn == false)
+							{
+								servo[servo1]=127;
+								sweeperOn=false;
+							}
 					}
 
 			if(joy2Btn(3) == 1)		//If B buttom is pressed
 				{
-
+					servo[servo1]=0;
+					sweeperOn=true;
 				}else
 					{
-
+						if(joy2Btn(3) == 0 && joy2Btn(2) == 0 && sweeperOn == false)
+							{
+								servo[servo1]=127;
+								sweeperOn=false;
+							}
 					}
 
 			if(joy2Btn(4) == 1)		//If Y buttom is pressed
@@ -217,7 +238,7 @@ task main()
 
 			if(joy2Btn(8) == 1)		//If Left Trigger button is pressed
 				{
-					motor[sweeper]=10;
+
 				}else
 					{
 
